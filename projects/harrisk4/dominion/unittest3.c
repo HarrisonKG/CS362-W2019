@@ -28,7 +28,7 @@ int testFullDeckCount()
 	
 	int success = 1;
 	int result, expected;
-	printf("Testing fullDeckCount):\n\n");
+	printf("Testing fullDeckCount():\n\n");
 
 	int cardTypes[27] = { curse, estate, duchy, province, copper, silver, gold, adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall, minion, steward, tribute, ambassador, cutpurse, embargo, outpost, salvager, sea_hag, treasure_map };
 
@@ -36,7 +36,12 @@ int testFullDeckCount()
 	 
 
 	// number of players ranges from 2 - 4
-	for (int i = 2; i <= 4; i++){					// these tests took way too long to run through -- 		
+//	for (int i = 2; i <= 4; i++){			
+
+/* these tests took way too long to run through (5 - 10 mins)
+ so I'm leaving the loop commented out and players set to max players (4) to cut down on iterations
+*/
+	int i = 4;
 
 		// test each player as the current player
 		for(int j = 0; j < i; j++){			
@@ -55,7 +60,6 @@ int testFullDeckCount()
 							G.deck[p][r] = -1;
 							G.hand[p][r] = -1;
 							G.discard[p][r] = -1;
-							//printf("G.deck[p][r] = %i\n", G.deck[p][r]);
 						}
 					}	
 				
@@ -92,7 +96,7 @@ int testFullDeckCount()
 				}
 			}
 		}
-	}
+	//}
 
 	if (success == 1){
 		printf("All tests passed!\n");

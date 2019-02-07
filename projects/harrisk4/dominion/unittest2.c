@@ -18,7 +18,7 @@ int testNumHandCards()
 	
 	int success = 1;
 	int result, expected;
-	printf("Testing numHandCards):\n\n");
+	printf("Testing numHandCards():\n\n");
 
 
 	// number of players ranges from 2 - 4
