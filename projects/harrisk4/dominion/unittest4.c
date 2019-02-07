@@ -10,7 +10,6 @@
 /*
 cards in all places; victory pts only in: 1 - only deck, 1 only discard, 1 only hand, 1 no victory points anywhere
 cards only in, victory points only in: ''
-no cards, no victory points
 cards in all places, victory points in all places
 */
 
@@ -24,7 +23,7 @@ void runTest(struct gameState* state, int player, int expected, int* success){
 		printf("scoreFor result of %i, Expected %i\n\n", result, expected);
 	} else {
 		printf("TEST SUCCEEDED\n");
-		printf("scoreFor result of %i, Expected %i\n\n", result, expected);
+		//printf("scoreFor result of %i, Expected %i\n\n", result, expected);
 	}
 }
 
@@ -35,6 +34,8 @@ int testScoreFor()
 	// initialize game state
 	struct gameState G = {};
 	memset(&G, '\0', sizeof (struct gameState));
+
+	int vpCards[27] = { curse, estate, duchy, province, great_hall, gardens };
 	
 	int success = 1;
 	int result, expected;
@@ -119,7 +120,7 @@ player 2 only has cards / vp in their discard; player 3 has cards in all places 
 	// test player 0
 	runTest(&G, 0, 0, &success);
 	// test player 1
-	runTest(&G, 1, 9, &success);
+	runTest(&G, 1, 9, &success);	//*** test fails because of a bug in scoreFor(): counts up to discardCount, not deckCount, when checking deck
 	// test player 2
 	runTest(&G, 2, 1, &success);
 	// test player 3
@@ -127,11 +128,81 @@ player 2 only has cards / vp in their discard; player 3 has cards in all places 
 
 
 
-
-
-
+/*-------------Test 3 ----------------------------------------------------------------------------------------------------------------------------------	
+one player has all victory point cards, in hand, deck, and discard 			
+[checks all cards in all 3 arrays]
+*/
 
 	
+	for (int i = 0; i < MAX_DECK; i++){
+		G.deck[0][i] = -1;
+		G.hand[0][i] = -1;
+		G.discard[0][i] = -1;
+	}
+
+	// put one of each card into each array
+	for(int j = 0; j < 28; j++)
+	{
+		G.hand[0][j] = j;		// set to card's number
+		G.deck[0][j] = j;	
+		G.discard[0][j] = j;	
+	}
+
+	// update counts
+	G.handCount[0] = 27;
+	G.deckCount[0] = 27;
+	G.discardCount[0] = 27;
+
+	runTest(&G, 0, 54, &success); // expected 3(-1 + 1 + 3 + 6 + 1 + (81/10 = 8)) = 3 * 18 = 54
+	// *** test fails because of a bug in dominion.c -> does not handle gardens cards correctly
+
+
+
+/*-------------Test 4 ----------------------------------------------------------------------------------------------------------------------------------	
+cycle through filling out the hand with each victory card			
+[tests each victory points card individually]
+*/
+	// start with all cards in all arrays as non-cards
+	for (int j = 0; j < MAX_DECK; j++){
+		G.deck[0][j] = -1;
+		G.hand[0][j] = -1;
+		G.discard[0][j] = -1;
+	}
+	G.handCount[0] = G.deckCount[0] = G.discardCount[0] = MAX_DECK;
+
+	// fill entire hand with each vp card
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[0];
+	}
+	runTest(&G, 0, -500, &success);
+
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[1];
+	}
+	runTest(&G, 0, 500, &success);
+
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[2];
+	}
+	runTest(&G, 0, 1500, &success);
+
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[3];
+	}
+	runTest(&G, 0, 3000, &success);
+
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[4];
+	}
+	runTest(&G, 0, 500, &success);
+
+	for (int j = 0; j < MAX_DECK; j++){
+		G.hand[0][j] = vpCards[5];
+	}
+	runTest(&G, 0, 50, &success);		//*** test fails because of a bug in scoreFor: doesn't handle gardens correctly
+	
+
+
 	if (success == 1){
 		printf("All tests passed!\n");
 	}
