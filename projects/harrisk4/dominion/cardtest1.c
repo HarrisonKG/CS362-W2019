@@ -7,10 +7,9 @@
 #include "rngs.h"
 #include <string.h>
 
-// call cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
-// returns int 0 or -1
-
 // move three cards from deck to hand; move smithy from hand to discard
+
+
 
 int testSmithy()
 {
@@ -117,7 +116,6 @@ printf("\nTesting smithy card:\n\n");
 //-------------Test 1 ----------------------------------------------------------------------------------------------------------------------------------	
 // check that the number of actions has not changed
 //
-	//printf("Test number of actions: \n");
 	asserttrue(G.numActions, 1, "Test number of actions unchanged", &success);
 
 

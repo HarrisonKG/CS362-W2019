@@ -7,9 +7,9 @@
 #include "rngs.h"
 #include <string.h>
 
-// call cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
-// returns int 0 or -1
 // great hall: +1 card, +1 action
+
+
 
 int testGreatHall()
 {
@@ -140,7 +140,7 @@ printf("\nTesting great hall card:\n\n");
 // [compare handCount and contents of hand[]]
 	asserttrue(G.handCount[0], endState.handCount[0], "Test handCount is unchanged (+1 and great hall removed)", &success);
 	for (int j = 0; j < MAX_DECK; j++){
-		asserttrue(G.hand[0][j], endState.hand[0][j], "Test hand updated with top card from deck and smithy removed", &success);
+		asserttrue(G.hand[0][j], endState.hand[0][j], "Test hand updated with top card from deck and great hall removed", &success);
 	}
 
 

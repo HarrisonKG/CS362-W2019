@@ -7,9 +7,8 @@
 #include "rngs.h"
 #include <string.h>
 
-// call cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
-// returns int 0 or -1
 // draw cards from deck until find 2 treasure cards -> put those into hand and discard the others
+
 
 
 int testAdventurer()
@@ -59,7 +58,6 @@ int testAdventurer()
 
 	G.discardCount[0] = 0;	// discard pile starts empty
 	G.hand[0][1] = adventurer;	// include adventurer (7)
-//	endState.hand[0][1] = adventurer;
 
 
 	/* modify struct to compare to after test */
@@ -160,7 +158,6 @@ printf("\nTesting adventurer card:\n\n");
 			asserttrue(G.handCount[i], -1, "Test that other players' counters are unchanged", &success);
 			asserttrue(G.discardCount[i], -1, "Test that other players' counters are unchanged", &success);
 	}
-
 
 
 

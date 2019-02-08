@@ -7,9 +7,9 @@
 #include "rngs.h"
 #include <string.h>
 
-// call cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
-// returns int 0 or -1
 // state->numActions +2, move 1 card from deck to hand, move village from hand to discard
+
+
 
 int testVillage()
 {
@@ -24,6 +24,7 @@ hand: village gone, top card from deck added to hand
 	memset(&G, '\0', sizeof (struct gameState));
 	memset(&endState, '\0', sizeof (struct gameState));
 	int success = 1;	// set to -1 if any test fails
+	G.whoseTurn = 0;	// player 0
 
 	// set all cards and piles to -1
 	for (int i = 0; i < MAX_PLAYERS; i++){
@@ -41,21 +42,21 @@ hand: village gone, top card from deck added to hand
 	}
 
 	// add cards to decks
-	for (int i = 0; i < 300; i++){
+	for (int i = 0; i < 28; i++){
 		G.deck[0][i] = i;
 		endState.deck[0][i] = i;
 	}
  	
  	// add cards to hands
- 	for (int i = 0; i < 200; i++){
+ 	for (int i = 0; i < 27; i++){
 		G.hand[0][i] = i;
 		endState.hand[0][i] = i;
 	}
 
-	G.handCount[0] = 200;
-	G.deckCount[0] = 300;	
-	endState.handCount[0] = 200;
-	endState.deckCount[0] = 300; 
+	G.handCount[0] = 27;
+	G.deckCount[0] = 28;	
+	endState.handCount[0] = 27;
+	endState.deckCount[0] = 28; 
 
 
 	G.numActions = 1;	// turn starts at 1
@@ -83,7 +84,10 @@ hand: village gone, top card from deck added to hand
 	endState.discardCount[0] = 1;	
 
 
-	playVillage(0, &G, 1);
+
+	// cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+	cardEffect(14, -1, -1, -1, &G, 1, 0); 
+
 
 /*
 	// examine contents if piles are small
@@ -107,14 +111,14 @@ hand: village gone, top card from deck added to hand
 	}
 */
 
+
+
 printf("\nTesting village card:\n\n");
 
 //-------------Test 1 ----------------------------------------------------------------------------------------------------------------------------------	
 // check that the number of actions has increased by 2
 //
-	//printf("Test number of actions: \n");
 	asserttrue(G.numActions, 3, "Test number of actions increases by 2", &success);
-
 
 
 //-------------Test 2 ----------------------------------------------------------------------------------------------------------------------------------	
@@ -124,6 +128,7 @@ printf("\nTesting village card:\n\n");
 	for (int j = 0; j < MAX_DECK; j++){
 		asserttrue(G.deck[0][j], endState.deck[0][j], "Test that top card is taken off deck", &success);
 	}
+
 
 //-------------Test 3 ----------------------------------------------------------------------------------------------------------------------------------	
 // check that the village card has been moved to the discard pile [compare discardCount and contents of discard[]]
