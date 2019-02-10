@@ -1,5 +1,7 @@
+/* Kristen Harrison
+362, assignment 3
+*/
 // victory cards in this set are just: curse, estate, duchy, province, great_hall, gardens
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -7,25 +9,7 @@
 #include "asserttrue.h"
 #include "rngs.h"
 #include <string.h>
-/*
-cards in all places; victory pts only in: 1 - only deck, 1 only discard, 1 only hand, 1 no victory points anywhere
-cards only in, victory points only in: ''
-cards in all places, victory points in all places
-*/
 
-
-void runTest(struct gameState* state, int player, int expected, int* success){
-	int result = scoreFor(player, state);
-
-	if (result != expected){
-		printf("TEST FAILED: ");
-		*success = -1;
-		printf("scoreFor result of %i, Expected %i\n\n", result, expected);
-	} else {
-		printf("TEST SUCCEEDED\n");
-		//printf("scoreFor result of %i, Expected %i\n\n", result, expected);
-	}
-}
 
 
 
@@ -38,8 +22,7 @@ int testScoreFor()
 	int vpCards[27] = { curse, estate, duchy, province, great_hall, gardens };
 	
 	int success = 1;
-	int result, expected;
-	printf("Testing scoreFor():\n\n");
+	printf("\nTesting scoreFor():\n\n");
 
 
 
@@ -47,7 +30,6 @@ int testScoreFor()
 // none of the 4 players have any cards (therefore no victory points either)		[all should return 0 ] 
 // [predominantly to make sure all player scores are zero]
 //
-	printf("Test 1: test all players having no cards");
 	// set all decks, discards, hands to -1 (so no card is indicated)
 	for (int i = 0; i < MAX_PLAYERS; i++){
 		for (int j = 0; j < MAX_DECK; j++){
@@ -64,7 +46,7 @@ int testScoreFor()
 	for (int i = 0; i < MAX_PLAYERS; i++){
 		for (int j = 0; j < MAX_DECK; j++){
 			// test each player, each has expected score of 0
-			runTest(&G, i, 0, &success);
+			asserttrue(scoreFor(i, &G), 0, "Every player has score of zero", &success); 
 		}
 	}
 
@@ -118,13 +100,15 @@ player 2 only has cards / vp in their discard; player 3 has cards in all places 
 
 
 	// test player 0
-	runTest(&G, 0, 0, &success);
+	asserttrue(scoreFor(0, &G), 0, "Test2, Player 0", &success); 
 	// test player 1
-	runTest(&G, 1, 9, &success);	//*** test fails because of a bug in scoreFor(): counts up to discardCount, not deckCount, when checking deck
+	//*** test fails because of a bug in scoreFor(): counts up to discardCount, not deckCount, when checking deck
+	asserttrue(scoreFor(1, &G), 9, "Test2, Player 1", &success); 
 	// test player 2
-	runTest(&G, 2, 1, &success);
+	asserttrue(scoreFor(2, &G), 1, "Test2, Player 2", &success); 
 	// test player 3
-	runTest(&G, 3, 0, &success);
+	asserttrue(scoreFor(3, &G), 0, "Test2, Player 3", &success); 
+
 
 
 
@@ -153,7 +137,8 @@ one player has all victory point cards, in hand, deck, and discard
 	G.deckCount[0] = 27;
 	G.discardCount[0] = 27;
 
-	runTest(&G, 0, 54, &success); // expected 3(-1 + 1 + 3 + 6 + 1 + (81/10 = 8)) = 3 * 18 = 54
+	// expected 3(-1 + 1 + 3 + 6 + 1 + (81/10 = 8)) = 3 * 18 = 54
+	asserttrue(scoreFor(0, &G), 54, "Player has all victory point cards in hand, deck, and discard", &success); 
 	// *** test fails because of a bug in dominion.c -> does not handle gardens cards correctly
 
 
@@ -174,32 +159,33 @@ cycle through filling out the hand with each victory card
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[0];
 	}
-	runTest(&G, 0, -500, &success);
+	asserttrue(scoreFor(0, &G), -500, "Test curse", &success); 
 
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[1];
 	}
-	runTest(&G, 0, 500, &success);
+	asserttrue(scoreFor(0, &G), 500, "Test estate", &success); 
 
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[2];
 	}
-	runTest(&G, 0, 1500, &success);
+	asserttrue(scoreFor(0, &G), 1500, "Test duchy", &success); 
 
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[3];
 	}
-	runTest(&G, 0, 3000, &success);
+	asserttrue(scoreFor(0, &G), 3000, "Test province", &success); 
 
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[4];
 	}
-	runTest(&G, 0, 500, &success);
+	asserttrue(scoreFor(0, &G), 500, "Test great hall", &success); 
 
 	for (int j = 0; j < MAX_DECK; j++){
 		G.hand[0][j] = vpCards[5];
 	}
-	runTest(&G, 0, 50, &success);		//*** test fails because of a bug in scoreFor: doesn't handle gardens correctly
+	//*** test fails because of a bug in scoreFor: doesn't handle gardens correctly
+	asserttrue(scoreFor(0, &G), 50, "Test gardens", &success); 
 	
 
 

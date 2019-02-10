@@ -402,16 +402,16 @@ int isGameOver(struct gameState *state) {
   //if three supply pile are at 0, the game ends
   j = 0;
   for (i = 0; i < 25; i++)
-    {
-      if (state->supplyCount[i] == 0)
-	{
-	  j++;
-	}
-    }
+  {
+    if (state->supplyCount[i] == 0)
+  	{
+  	  j++;
+  	}
+  }
   if ( j >= 3)
-    {
-      return 1;
-    }
+  {
+    return 1;
+  }
 
   return 0;
 }
@@ -791,7 +791,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      playAdventurer(drawntreasure, state, currentPlayer, temphand, z);
+      return playAdventurer(drawntreasure, state, currentPlayer, temphand, z);
+      
     /*
       while(drawntreasure<2){
   if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -929,7 +930,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
       
     case remodel:
-      playRemodel(state, choice1, choice2, currentPlayer, handPos);
+      return playRemodel(state, choice1, choice2, currentPlayer, handPos);
+      
     /*
       j = state->hand[currentPlayer][choice1];  //store card we will trash
 
@@ -957,7 +959,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
     */
     case smithy:
-      playSmithy(currentPlayer, state, handPos);
+      return playSmithy(currentPlayer, state, handPos);
+      
     /*
       //+3 Cards
       for (i = 0; i < 3; i++)
@@ -971,7 +974,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       */
     
     case village:
-      playVillage(currentPlayer, state, handPos);
+      return playVillage(currentPlayer, state, handPos);
+      
     /*
       //+1 Card
       drawCard(currentPlayer, state);
@@ -1237,7 +1241,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
     
     case cutpurse:
-      playCutpurse(currentPlayer, state, handPos);
+      return playCutpurse(currentPlayer, state, handPos);
+      
 /*
       updateCoins(currentPlayer, state, 2);
       for (i = 0; i < state->numPlayers; i++)
@@ -1327,28 +1332,28 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       //search hand for another treasure_map
       index = -1;
       for (i = 0; i < state->handCount[currentPlayer]; i++)
-  {
-    if (state->hand[currentPlayer][i] == treasure_map && i != handPos)
       {
-        index = i;
-        break;
+        if (state->hand[currentPlayer][i] == treasure_map && i != handPos)
+          {
+            index = i;
+            break;
+          }
       }
-  }
       if (index > -1)
-  {
-    //trash both treasure cards
-    discardCard(handPos, currentPlayer, state, 1);
-    discardCard(index, currentPlayer, state, 1);
-
-    //gain 4 Gold cards
-    for (i = 0; i < 4; i++)
       {
-        gainCard(gold, state, 1, currentPlayer);
+        //trash both treasure cards
+        discardCard(handPos, currentPlayer, state, 1);
+        discardCard(index, currentPlayer, state, 1);
+
+        //gain 4 Gold cards
+        for (i = 0; i < 4; i++)
+        {
+          gainCard(gold, state, 1, currentPlayer);
+        }
+          
+        //return success
+        return 1;
       }
-        
-    //return success
-    return 1;
-  }
       
       //no second treasure_map found in hand
       return -1;

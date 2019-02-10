@@ -1,4 +1,7 @@
-
+/* Kristen Harrison
+362, assignment 3
+*/
+// move three cards from deck to hand; move smithy from hand to discard
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -6,8 +9,6 @@
 #include "asserttrue.h"
 #include "rngs.h"
 #include <string.h>
-
-// move three cards from deck to hand; move smithy from hand to discard
 
 
 

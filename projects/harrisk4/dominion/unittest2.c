@@ -1,5 +1,6 @@
-
-
+/* Kristen Harrison
+362, assignment 3
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -17,8 +18,7 @@ int testNumHandCards()
 	memset(&G, '\0', sizeof (struct gameState));
 	
 	int success = 1;
-	int result, expected;
-	printf("Testing numHandCards():\n\n");
+	printf("\nTesting numHandCards():\n\n");
 
 
 	// number of players ranges from 2 - 4
@@ -30,17 +30,9 @@ int testNumHandCards()
 				// set current player's hand to some number of cards, then test
 				G.handCount[j] = k;
 				G.whoseTurn = j;
-				result = numHandCards(&G);
-				expected = k;
 
-				if (result != expected){
-					printf("TEST FAILED: ");
-					success = -1;
-					printf("numHandCards result of %i, Expected %i\n\n", result, expected);
-				} else {
-					printf("TEST SUCCEEDED: ");
-				}
-				printf("numHandCards result of %i, Expected %i\n\n", result, expected);
+				// should return the same number of cards in the hand as we set it to
+				asserttrue(numHandCards(&G), k, "Return number of cards in the hand", &success); 
 			}
 		}
 	}

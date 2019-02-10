@@ -1,4 +1,6 @@
-
+/* Kristen Harrison
+362, assignment 3
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -16,8 +18,6 @@ int testVillage()
 /* 
 bug: nothing added to discard (unchanged) [should have received the village card] -- problem with discardCard
 bug: my bug, the =2 [numAction + 2 works without my bug]
-deck appears to have lost top card as it should
-hand: village gone, top card from deck added to hand
 */
 	struct gameState G = {};	// use this to test function
 	struct gameState endState = {};	// use this as the answer sheet to compare G to after test runs

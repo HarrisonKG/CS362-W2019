@@ -1,4 +1,6 @@
-
+/* Kristen Harrison
+362, assignment 3
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -84,7 +86,7 @@ int testAdventurer()
 	cardEffect(7, -1, -1, -1, &G, 1, 0); 
 
 
-
+/*
 	// examine contents if piles are small
 	for (int j = 0; j < G.deckCount[0]; j++){
 		printf("G deck[%i]: %i\n", j, G.deck[0][j]);
@@ -104,7 +106,7 @@ int testAdventurer()
 	for (int j = 0; j < endState.discardCount[0]; j++){
 		printf("endState discard[%i]: %i\n", j, endState.discard[0][j]);
 	}
-
+*/
 
 
 

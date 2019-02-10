@@ -1,4 +1,7 @@
-
+/* Kristen Harrison
+362, assignment 3
+*/
+// great hall: +1 card, +1 action
 #include <stdio.h>
 #include <stdlib.h>
 #include "dominion.h"
@@ -6,8 +9,6 @@
 #include "asserttrue.h"
 #include "rngs.h"
 #include <string.h>
-
-// great hall: +1 card, +1 action
 
 
 
