@@ -654,8 +654,8 @@ int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
       shuffle(currentPlayer, state);
     }
     drawCard(currentPlayer, state);
-//    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];// bug: off by one error so the card referenced is outside the bounds of the hand
+    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+//    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];// bug: off by one error so the card referenced is outside the bounds of the hand
     if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
       drawntreasure++;
     else{
@@ -792,7 +792,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     {
     case adventurer:
       return playAdventurer(drawntreasure, state, currentPlayer, temphand, z);
-      
+
     /*
       while(drawntreasure<2){
   if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -931,7 +931,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       
     case remodel:
       return playRemodel(state, choice1, choice2, currentPlayer, handPos);
-      
+
     /*
       j = state->hand[currentPlayer][choice1];  //store card we will trash
 
@@ -960,7 +960,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     */
     case smithy:
       return playSmithy(currentPlayer, state, handPos);
-      
+
     /*
       //+3 Cards
       for (i = 0; i < 3; i++)
@@ -975,7 +975,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     
     case village:
       return playVillage(currentPlayer, state, handPos);
-      
+
     /*
       //+1 Card
       drawCard(currentPlayer, state);
