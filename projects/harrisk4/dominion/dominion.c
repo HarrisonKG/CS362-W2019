@@ -654,8 +654,8 @@ int playAdventurer(int drawntreasure, struct gameState *state, int currentPlayer
       shuffle(currentPlayer, state);
     }
     drawCard(currentPlayer, state);
-    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-//    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];// bug: off by one error so the card referenced is outside the bounds of the hand
+//    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+    int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];// bug: off by one error so the card referenced is outside the bounds of the hand
     if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
       drawntreasure++;
     else{
