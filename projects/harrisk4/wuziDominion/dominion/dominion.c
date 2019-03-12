@@ -1200,8 +1200,8 @@ int updateCoins(int player, struct gameState *state, int bonus) {
 int smithyAction(int currentPlayer, struct gameState *state, int handPos) {
   //+3 Cards
   int i;
-  // bug introduced: draw 30 cards instead of 3
-  for (i = 0; i < 30; i++) {
+  //for (i = 0; i < 30; i++) {    // bug: drew 30 cards instead of 3
+  for (i = 0; i < 3; i++) {       // fixed line of code
     drawCard(currentPlayer, state);
   }
   // discard card from hand
@@ -1249,9 +1249,8 @@ int villageAction(int currentPlayer, struct gameState *state, int handPos) {
   //+1 Card
   drawCard(currentPlayer, state);
   //+2 Actions
-  /*state->numActions = state->numActions + 2;*/
-  // Bug introduced, instead of add two actions, number of actions is set to 2
-  state->numActions = 2;
+  state->numActions = state->numActions + 2;    // fixed line of code
+  //state->numActions = 2;      // bug: actions set to 2 instead of incremented by 2
 
   // discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
